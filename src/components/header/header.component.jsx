@@ -10,10 +10,8 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 import './header.styles.scss';
 
-// functionnal component
 const Header = ({ currentUser, hidden }) => (
 	<div className="header">
-		{/* our logo link to homepage on click  */}
 		<Link className="logo-container" to="/">
 			<Logo className="logo" />
 		</Link>
@@ -39,7 +37,6 @@ const Header = ({ currentUser, hidden }) => (
 	</div>
 );
 
-// this is how to destructure nested values
 const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
 	currentUser,
 	hidden
