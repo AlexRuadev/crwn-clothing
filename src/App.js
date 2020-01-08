@@ -8,7 +8,7 @@ import './App.css';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import CheckoutPage from './pages//checkout/checkout.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
 
@@ -24,26 +24,21 @@ class App extends React.Component {
 		const { setCurrentUser } = this.props;
 
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-			// check if they sign in, if there is, we get back the userRef from createUserProfileDocument
 			if (userAuth) {
 				const userRef = await createUserProfileDocument(userAuth);
 
 				userRef.onSnapshot((snapShot) => {
 					setCurrentUser({
-						currentUser : {
-							id : snapShot.id,
-							...snapShot.data()
-						}
+						id : snapShot.id,
+						...snapShot.data()
 					});
 				});
 			}
-			else {
-				setCurrentUser(userAuth);
-			}
+
+			setCurrentUser(userAuth);
 		});
 	}
 
-	// this will close the subscription
 	componentWillUnmount () {
 		this.unsubscribeFromAuth();
 	}
@@ -51,15 +46,14 @@ class App extends React.Component {
 	render () {
 		return (
 			<div>
-				{/* currentUser to check if log or not */}
 				<Header />
 				<Switch>
 					<Route exact path='/' component={HomePage} />
 					<Route path='/shop' component={ShopPage} />
-					<Route path='/checkout' component={CheckoutPage} />
+					<Route exact path='/checkout' component={CheckoutPage} />
 					<Route
 						exact
-						path='/signIn'
+						path='/signin'
 						render={() =>
 
 								this.props.currentUser ? <Redirect to='/' /> :
